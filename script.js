@@ -1,5 +1,6 @@
 const contentEl = document.getElementById('content');
 const headerEl = document.getElementById("headerBar");
+const selectEl = document.createElement('select');
 const allEpisodes = getAllEpisodes();
 
 
@@ -7,7 +8,6 @@ const allEpisodes = getAllEpisodes();
 function setup() {
   contentEl.innerHTML = '';
   makePageCardForEpisodes(allEpisodes);
-  // dropdownMenu(allEpisodes);
   dropdownMenu(allEpisodes);
 }
 
@@ -32,7 +32,6 @@ function makePageCardForEpisodes(episodeList){
       movieEpisodesNumber = `0${movieEpisodesNumber}`
     }
     const episodeCode = `S0${movieSeasonNumber}E${movieEpisodesNumber}`;
-    
     movieEl.innerHTML=
     `<div id="movieCard">
     <button><a href="${movieUrl}" target="_blank">
@@ -48,19 +47,29 @@ function makePageCardForEpisodes(episodeList){
     contentEl.appendChild(movieEl);
   });
   showEpisodes(episodeList)
+  
 }
 
 /*---------------------------------Dropdown Menu----------------------------------*/
 
 
-/*----Function with Map Function for Search bar----*/ 
+/*----Function with Map Function for Dropdown Menu----*/ 
 function dropdownMenu(episodeList){
-  const selectEl = document.createElement('select');
-  const options = episodeList.map(movie => `<option value="${movie.name}">${movie.name}-${movie.name}</option>`);
-  selectEl.innerHTML = options.join('');
-  console.log(selectEl);
-  document.getElementById('root').appendChild(selectEl);
-}
+  selectEl.innerHTML = '';
+  let options =  episodeList.map((movie) => {
+  let dropdownNumber = movie.number;
+  let dropdownSeason = movie.season;
+    if(dropdownNumber < 10){
+      dropdownNumber = `0${dropdownNumber}`
+    }
+  const dropdownEpisodeCode = `S0${dropdownSeason}E${dropdownNumber}`;
+    return`<option value="${movie.name}">${dropdownEpisodeCode} - ${movie.name}</option>`;  
+  }); 
+selectEl.innerHTML =options.join('')
+document.getElementById('root').appendChild(selectEl);
+};
+
+
 
 /*-----------------------------------------Search Bar------------------------------*/
 

@@ -40,6 +40,16 @@ form{
   align-self: center;
   margin-left: 3rem;
 }
+select{
+  display: block;
+  margin-top: 10px;
+  padding: 2px;
+  border-radius: 1rem;
+  border: none;
+}
+select:focus{
+  outline: none;
+}
 
 #content {
   display: flex;
