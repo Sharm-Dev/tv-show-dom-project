@@ -14,6 +14,18 @@ function setup() {
 
 /*--------------------------------------------------------------------------------*/
 
+function getEpisodeCode(createEpisodeCard){
+  const movieSeasonNumber = createEpisodeCard.season;
+  let movieEpisodesNumber = createEpisodeCard.number;
+    if(movieEpisodesNumber < 10){
+      movieEpisodesNumber = `0${movieEpisodesNumber}`
+    }
+    const episodeCode = `S0${movieSeasonNumber}E${movieEpisodesNumber}`;
+    return episodeCode
+};
+
+
+
 
 /*----Function in with a Loop in for making all the cards----*/
 function makePageCardForEpisodes(episodeList){
@@ -26,12 +38,10 @@ function makePageCardForEpisodes(episodeList){
     const movieImg = createEpisodeCard.image.medium;
     const movieTitle = createEpisodeCard.name;
     const movieSummary = createEpisodeCard.summary;
-    const movieSeasonNumber = createEpisodeCard.season;
-    let movieEpisodesNumber = createEpisodeCard.number;
-    if(movieEpisodesNumber < 10){
-      movieEpisodesNumber = `0${movieEpisodesNumber}`
-    }
-    const episodeCode = `S0${movieSeasonNumber}E${movieEpisodesNumber}`;
+
+    const episodeCode = getEpisodeCode(createEpisodeCard);
+
+
     movieEl.innerHTML=
     `<div id="movieCard">
     <button><a href="${movieUrl}" target="_blank">
@@ -54,6 +64,8 @@ function makePageCardForEpisodes(episodeList){
 
 
 /*----Function with Map Function for Dropdown Menu----*/ 
+
+
 function dropdownMenu(episodeList){
   selectEl.innerHTML = '';
   let options =  episodeList.map((movie) => {
@@ -68,6 +80,28 @@ function dropdownMenu(episodeList){
 selectEl.innerHTML =options.join('')
 document.getElementById('root').appendChild(selectEl);
 };
+
+
+
+
+
+
+
+
+// function dropdownMenu(episodeList){
+//   selectEl.innerHTML = '';
+//   let options =  episodeList.map((episode) => {
+  
+//   const dropdownEpisodeCode = getEpisodeCode(episode);
+
+//     return`<option value="${episode.name}">${dropdownEpisodeCode} - ${episode.name}</option>`;  
+//   }); 
+// selectEl.innerHTML =options.join('')
+// document.getElementById('root').appendChild(selectEl);
+// };
+// selectEl.addEventListener("change",(e)=>{
+//   console.log(e.target.value);
+// })
 
 
 
