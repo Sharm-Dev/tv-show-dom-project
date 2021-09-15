@@ -1,6 +1,7 @@
 const contentEl = document.getElementById('content');
 const headerEl = document.getElementById("headerBar");
 const selectEl = document.createElement('select');
+const searchEl = document.getElementById('search');
 const allEpisodes = getAllEpisodes();
 
 
@@ -66,50 +67,31 @@ function makePageCardForEpisodes(episodeList){
 /*----Function with Map Function for Dropdown Menu----*/ 
 
 
+
+
 function dropdownMenu(episodeList){
   selectEl.innerHTML = '';
-  let options =  episodeList.map((movie) => {
-  let dropdownNumber = movie.number;
-  let dropdownSeason = movie.season;
-    if(dropdownNumber < 10){
-      dropdownNumber = `0${dropdownNumber}`
-    }
-  const dropdownEpisodeCode = `S0${dropdownSeason}E${dropdownNumber}`;
-    return`<option value="${movie.name}">${dropdownEpisodeCode} - ${movie.name}</option>`;  
+  let options =  episodeList.map((episode) => {
+  
+  const dropdownEpisodeCode = getEpisodeCode(episode);
+
+    return`<option value="${episode.name}">${dropdownEpisodeCode} - ${episode.name}</option>`;  
   }); 
 selectEl.innerHTML =options.join('')
 document.getElementById('root').appendChild(selectEl);
 };
-
-
-
-
-
-
-
-
-// function dropdownMenu(episodeList){
-//   selectEl.innerHTML = '';
-//   let options =  episodeList.map((episode) => {
-  
-//   const dropdownEpisodeCode = getEpisodeCode(episode);
-
-//     return`<option value="${episode.name}">${dropdownEpisodeCode} - ${episode.name}</option>`;  
-//   }); 
-// selectEl.innerHTML =options.join('')
-// document.getElementById('root').appendChild(selectEl);
-// };
-// selectEl.addEventListener("change",(e)=>{
-//   console.log(e.target.value);
-// })
+selectEl.addEventListener("change",(e)=>{
+  console.log(e.target.value);
+  filterSearchResults(allEpisodes, e.target.value);
+})
 
 
 
 /*-----------------------------------------Search Bar------------------------------*/
 
 /*----Event listener for Function Search bar----*/
-  const searchEl = document.getElementById('search');
-  form.addEventListener("input", (e) => {
+
+form.addEventListener("input", (e) => {
   e.preventDefault();
   const searchTerm = searchEl.value;
   console.log("search Episodes:", searchTerm);
@@ -118,14 +100,16 @@ document.getElementById('root').appendChild(selectEl);
 
 /*----Fliter Function for Search bar----*/
 function filterSearchResults(arrayOfEpisodes, searchInput) {
+  searchInput = searchInput.toLowerCase();
     filteredEpisodes = arrayOfEpisodes.filter((episode) => {
     return (
       episode.summary.toLowerCase().includes(searchInput) ||
       episode.name.toLowerCase().includes(searchInput)
     );
   })
-  makePageCardForEpisodes(filteredEpisodes)
-   console.log(filteredEpisodes)
+  makePageCardForEpisodes(filteredEpisodes);
+  dropdownMenu(arrayOfEpisodes);
+
 }
 
   
