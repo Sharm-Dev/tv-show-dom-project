@@ -1,5 +1,6 @@
 const contentEl = document.getElementById('content');
 const headerEl = document.getElementById("headerBar");
+const formEl = document.getElementById("form")
 const selectEl = document.createElement('select');
 const searchEl = document.getElementById('search');
 const allEpisodes = getAllEpisodes();
@@ -13,7 +14,7 @@ function setup() {
 }
 
 
-/*--------------------------------------------------------------------------------*/
+/*----------------------Season and episode code-----------------------------------*/
 
 function getEpisodeCode(createEpisodeCard){
   const movieSeasonNumber = createEpisodeCard.season;
@@ -24,7 +25,6 @@ function getEpisodeCode(createEpisodeCard){
     const episodeCode = `S0${movieSeasonNumber}E${movieEpisodesNumber}`;
     return episodeCode
 };
-
 
 
 
@@ -57,17 +57,12 @@ function makePageCardForEpisodes(episodeList){
     </div>`;
     contentEl.appendChild(movieEl);
   });
-  showEpisodes(episodeList)
-  
 }
 
 /*---------------------------------Dropdown Menu----------------------------------*/
 
 
 /*----Function with Map Function for Dropdown Menu----*/ 
-
-
-
 
 function dropdownMenu(episodeList){
   selectEl.innerHTML = '';
@@ -82,44 +77,40 @@ document.getElementById('root').appendChild(selectEl);
 };
 selectEl.addEventListener("change",(e)=>{
   console.log(e.target.value);
-  filterSearchResults(allEpisodes, e.target.value);
-})
-
+  let filteredArray = filterSearchResults(allEpisodes, e.target.value);
+  makePageCardForEpisodes(filteredArray);
+});
 
 
 /*-----------------------------------------Search Bar------------------------------*/
 
-/*----Event listener for Function Search bar----*/
-
-form.addEventListener("input", (e) => {
-  e.preventDefault();
-  const searchTerm = searchEl.value;
-  console.log("search Episodes:", searchTerm);
-  filterSearchResults(allEpisodes, searchTerm.toLowerCase());
-});
 
 /*----Fliter Function for Search bar----*/
 function filterSearchResults(arrayOfEpisodes, searchInput) {
   searchInput = searchInput.toLowerCase();
-    filteredEpisodes = arrayOfEpisodes.filter((episode) => {
+   filteredEpisodes = arrayOfEpisodes.filter((episode) => {
     return (
       episode.summary.toLowerCase().includes(searchInput) ||
       episode.name.toLowerCase().includes(searchInput)
     );
   })
-  makePageCardForEpisodes(filteredEpisodes);
-  dropdownMenu(arrayOfEpisodes);
-
+  return filteredEpisodes;
 }
+formEl.addEventListener("input", (e) => {
+  e.preventDefault();
+  const searchTerm = searchEl.value;
+  let filteredArray = filterSearchResults(allEpisodes, searchTerm.toLowerCase());
+  makePageCardForEpisodes(filteredEpisodes);
+  dropdownMenu(filteredEpisodes);
+  showEpisodes(filteredArray);
+});
 
   
 /*--------------------------------------------------------------------------------*/
 
-
-
 /*----Function that displays how many epsisodes are displaying on the webpage----*/  
 function showEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
+  const rootElem = document.getElementById("rootGotNumEpisodeText");
   rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 }
 
