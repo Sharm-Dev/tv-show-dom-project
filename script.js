@@ -72,13 +72,25 @@ function dropdownMenu(episodeList){
 
     return`<option value="${episode.name}">${dropdownEpisodeCode} - ${episode.name}</option>`;  
   }); 
-selectEl.innerHTML =options.join('')
+selectEl.innerHTML =options.join('');
+const showAll = document.createElement('option');
+showAll.value = 'DEFAULT';
+showAll.innerText = `-- Show All Episodes --`;
+selectEl.appendChild(showAll);
 document.getElementById('root').appendChild(selectEl);
 };
+
 selectEl.addEventListener("change",(e)=>{
-  console.log(e.target.value);
-  let filteredArray = filterSearchResults(allEpisodes, e.target.value);
-  makePageCardForEpisodes(filteredArray);
+  let value = e.target.value;
+  if(value === 'DEFAULT'){
+    setup();
+    showEpisodes(allEpisodes);
+    clearSearch();
+  }else{
+    let filteredArray = filterSearchResults(allEpisodes, e.target.value);
+    makePageCardForEpisodes(filteredArray);
+    clearSearch();
+  }
 });
 
 
@@ -94,8 +106,9 @@ function filterSearchResults(arrayOfEpisodes, searchInput) {
       episode.name.toLowerCase().includes(searchInput)
     );
   })
-  return filteredEpisodes;
-}
+    return filteredEpisodes;
+};
+
 formEl.addEventListener("input", (e) => {
   e.preventDefault();
   const searchTerm = searchEl.value;
@@ -104,6 +117,10 @@ formEl.addEventListener("input", (e) => {
   dropdownMenu(filteredEpisodes);
   showEpisodes(filteredArray);
 });
+
+function clearSearch(){
+  searchEl.value = ''; 
+};
 
   
 /*--------------------------------------------------------------------------------*/
