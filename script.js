@@ -1,8 +1,11 @@
 const contentEl = document.getElementById("content");
 const headerEl = document.getElementById("headerBar");
 const formEl = document.getElementById("form");
+const searchShowEl = document.getElementById("showDDown");
 const selectEl = document.createElement("select");
 const searchEl = document.getElementById("search");
+let currentShow = 82;
+
 
 //Cached version
 // let allEpisodesCached;
@@ -21,7 +24,7 @@ const searchEl = document.getElementById("search");
 /*----------------------function for fetch from the API-----------------------------------*/
 
 function fetchAllEpisodes() {
-  return fetch("https://api.tvmaze.com/shows/82/episodes").then((response) => {
+  return fetch(`https://api.tvmaze.com/shows/${currentShow}/episodes`).then((response) => {
     console.log("The response ---->", response);
     return response.json();
   });
@@ -31,16 +34,19 @@ function fetchAllEpisodes() {
 
 function setup() {
   contentEl.innerHTML = "";
+  
 
   fetchAllEpisodes()
     .then((result) => {
       console.log("The result------>", result);
       makePageCardForEpisodes(result);
       dropdownMenu(result);
+      searchShow();
     })
     .catch((err) => {
       console.log(err);
     });
+
 }
 
 /*----------------------Season and episode code-----------------------------------*/
@@ -62,7 +68,11 @@ function makePageCardForEpisodes(episodeList) {
   episodeList.forEach((createEpisodeCard) => {
     const movieEl = document.createElement("main");
     const movieUrl = createEpisodeCard.url;
-    const movieImg = createEpisodeCard.image.medium;
+    
+    const movieImg = !createEpisodeCard.image
+      ? ""
+      : createEpisodeCard.image.medium;
+
     const movieTitle = createEpisodeCard.name;
     const movieSummary = createEpisodeCard.summary;
 
@@ -83,6 +93,32 @@ function makePageCardForEpisodes(episodeList) {
 }
 
 /*---------------------------------Dropdown Menu----------------------------------*/
+function searchShow(){
+  showDropDown.innerHTML = `
+  <option>---Pick A Show---</option>
+  <option value="82">Game of Thorns</option>
+  <option value="527">The Sopranos</option>
+  <option value="22036">Planet Earth II</option>
+  <option value="5">True Detective</option>
+  <option value="582">Fresh Prince</option>
+  <option value="179">The Wire</option>
+  <option value="379">Mythbusters</option>
+  <option value="4729">Scrapheap Challenge</option>
+  `;
+}
+showDropDown.addEventListener("change", (e) => {
+  currentShow = e.target.value;
+  fetchAllEpisodes()
+    .then((result) => {
+      makePageCardForEpisodes(result);
+      dropdownMenu(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+})
+
+
 
 /*----Function with Map Function for Dropdown Menu----*/
 
@@ -98,7 +134,7 @@ function dropdownMenu(episodeList) {
   showAll.value = "DEFAULT";
   showAll.innerText = `-- Show All Episodes --`;
   selectEl.appendChild(showAll);
-  document.getElementById("root").appendChild(selectEl);
+  document.getElementById("epsiodeDropDown").appendChild(selectEl);
 }
 
 selectEl.addEventListener("change", (e) => {

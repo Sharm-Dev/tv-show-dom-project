@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | Sharmaine Taylor (Sharm-Dev)</title>
-    <link href="style.css" rel="stylesheet" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  </head>
 
-  <body>
-    <header id="headerBar">
-      </div>
-      <div id="root">
-        <p id="rootGotNumEpisodeText"></p>
-      </div>
-      <div id="website-logo">
-        <img src="favicon.ico">
-      </div>
-      <form id="form">
-        <input id="search" class="search" type="text" placeholder="Search Movies"/>
-      </form>
-    </header>
-    <div id="content">
-      <!-- //content inserted  -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TV Show Project | Sharmaine Taylor (Sharm-Dev)</title>
+  <link href="style.css" rel="stylesheet" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+</head>
 
-      <!-- In my script.js
+<body>
+  <header id="headerBar">
+    
+    <div id="root">
+      <p id="rootGotNumEpisodeText"></p>
+      <div id="searchShowDropDown">
+        <select id="showDropDown"></select>
+      </div>
+      <div id="epsiodeDropDown"></div>
+    </div>
+
+    <div id="website-logo">
+      <img src="favicon.ico">
+    </div>
+
+    <form id="form">
+      <input id="search" class="search" type="text" placeholder="Search Movies" />
+    </form>
+
+  </header>
+
+  <div id="content">
+    <!-- //content inserted  -->
+
+    <!-- In my script.js
       <div id="movieCard">
         <h1>${movieTitle}</h1>
         <img src="${movieUrl}" alt="${movieTitle}" />
         <p>${movieSummary}</p>
       </div> -->
 
-      <!-- HTML code same as above
+    <!-- HTML code same as above
         The code below is the same code that is in my script.js
       if I was to put it in HTML this is what it would look like.  
       <div id="movieCard">
@@ -43,17 +52,20 @@
           reclaim his father's throne, usurped by Robert, by selling his sister in marriage.</p>
       </div>
       -->
-      </div>
+  </div>
 
-      <footer>
-        <p>Orginal Source <a href="https://www.tvmaze.com/">©TVMaze.com</a><a></a></p>
-      </footer>
-     
-    <!-- NOT USED NO MORE AS USING AN API NOW - Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <!-- <script src="episodes.js"></script> -->
+  <footer>
+    <p>Orginal Source <a href="https://www.tvmaze.com/">©TVMaze.com</a><a></a></p>
+  </footer>
 
-    <!-- Loads YOUR javascript code -->
-    <script src="script.js"></script>
-    
-  </body>
+  <!-- NOT USED NO MORE AS USING AN API NOW - Loads a provided function called getAllEpisodes() which returns all episodes -->
+  <!-- <script src="episodes.js"></script> -->
+
+  <!-- <script src="shows.js></script> -->
+
+  <!-- Loads YOUR javascript code -->
+  <script src="script.js"></script>
+
+</body>
+
 </html>
